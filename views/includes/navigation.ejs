@@ -10,8 +10,18 @@
             <a class="nav-link mb-0 <%= path === '/' ? 'active' : '' %>" aria-current="page" href="/">Products</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link mb-0 <%= path === '/add-item' ? 'active' : '' %>" href="/add-item">Add Product</a>
+            <a class="nav-link mb-0 <%= path === '/warehouse' ? 'active' : '' %>" href="/warehouse">Warehouses</a>
+          </li>          
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle <%= path === '/add-item' ? 'active' : '' %> <%= path === '/add-warehouse' ? 'active' : '' %>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Add
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item <%= path === '/add-item' ? 'active' : '' %>" href="/add-item">Product</a>
+              <a class="dropdown-item <%= path === '/add-warehouse' ? 'active' : '' %>" href="/add-warehouse">Warehouse</a>
+            </div>
           </li>
+
         </ul>
       </div>
     </div>

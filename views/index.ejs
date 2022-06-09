@@ -1,5 +1,4 @@
 <%- include('./includes/head.ejs') %>
-    <link rel="stylesheet" href="/css/product.css">
 </head>
 
 <body>
@@ -23,10 +22,10 @@
                         </div>
                         <ul class="list-group list-group-flush">
                           <li class="list-group-item"><label class="fw-bold">Category:</label> <%= item.category %></li>
-                          <li class="list-group-item"><label class="fw-bold">Cost per item:</label> <%= item.costPerItem %>$</li>
-                          <li class="list-group-item"><label class="fw-bold">Quantity:</label> <%= item.quantity %></li>
                         </ul>
                         <div class="card-body">
+                            <a href="/inventory/add/<%= item._id %>" class="btn btn-secondary" class="btn">Add Inventory</a>
+
                             <a href="/edit-item/<%= item._id %>" class="btn btn-primary" class="btn">Edit</a>
                           
                             <form action="/delete-item" method="POST">
@@ -43,4 +42,5 @@
         <% } %>
             </div>
     </main>
+
 <%- include('./includes/end.ejs') %>
