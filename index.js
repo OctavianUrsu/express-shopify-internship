@@ -1,6 +1,7 @@
 const path = require('path');
 const express = require('express');
 const mongoose = require('mongoose');
+const bodyParser = require('body-parser')
 
 const inventoryRoutes = require('./routes/inventory');
 
@@ -16,6 +17,8 @@ const DB_PW = process.env.DB_PW;
 // Set default template engine to ejs and render path to 'views' folder
 app.set('view engine', 'ejs');
 app.set('views', 'views');
+
+app.use(bodyParser.urlencoded({ extended: false })); // Parse body requests
 app.use(express.static(path.join(__dirname, 'public'))); // Serving static files from the public folder 
 
 // Set the routes
@@ -24,7 +27,7 @@ app.use(inventoryRoutes);
 // Connect to the mongo database
 mongoose
   .connect(
-    `mongodb+srv://${DB_USER}:${DB_PW}@cluster0.we5y7ah.mongodb.net/?retryWrites=true&w=majority`
+    `mongodb+srv://${DB_USER}:${DB_PW}@cluster0.we5y7ah.mongodb.net/inventory?retryWrites=true&w=majority`
   )
   .then(() => {
     // If connection to db is successful, start the server
