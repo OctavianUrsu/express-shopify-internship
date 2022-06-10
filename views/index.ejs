@@ -15,9 +15,9 @@
                             <img src="<%= item.imageUrl %>" class="card-img-top" alt="<%= item.name %>">
                         <% } %>
                         <div class="card-body">
-                          <h5 class="card-title"><%= item.name %></h5>
+                          <h5 class="card-title overflow-title"><%= item.name %></h5>
                           <% if (item.description) { %>
-                            <p class="card-text"><%= item.description %></p>
+                            <p class="card-text overflow-text"><%= item.description %></p>
                           <% } %>
                         </div>
                         <ul class="list-group list-group-flush">

@@ -1,11 +1,22 @@
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700');
 
-.card-img-top {
-  height: 16rem;
+.overflow-title {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.card-img-top img {
-  height: 100%
+.overflow-text {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.card-img-top {
+  height: 15rem;
+  object-fit: cover;
 }
 
 * {
