@@ -2,47 +2,46 @@
 </head>
 
 <body>
-    <%- include('./includes/navigation.ejs') %>
+  <%- include('./includes/navigation.ejs') %>
 
-    <main>
-        <div class="container">
-        <% if (items.length > 0) { %>
-          <h1 class="p-3">Inventory of <%= city %> warehouse</h1>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-              <% items.forEach(i => { %>
-                <div class="col">
-                    <div class="card">
-                        <% if (i.itemId.imageUrl) { %>
-                            <img src="<%= i.itemId.imageUrl %>" class="card-img-top" alt="<%= i.itemId.name %>">
-                        <% } %>
-                        <div class="card-body">
-                          <h5 class="card-title overflow-title"><%= i.itemId.name %></h5>
-                          <% if (i.itemId.description) { %>
-                            <p class="card-text overflow-text"><%= i.itemId.description %></p>
-                          <% } %>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                          <li class="list-group-item"><label class="fw-bold">Category:</label> <%= i.itemId.category %></li>
-                          <li class="list-group-item"><label class="fw-bold">Quantity:</label> <%= i.quantity %></li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="/inventory/add/<%= i.itemId._id %>" class="btn btn-secondary" class="btn">Add Inventory</a>
-
-                            <a href="/edit-item/<%= i.itemId._id %>" class="btn btn-primary" class="btn">Edit</a>
-                          
-                            <form action="/delete-item" method="POST">
-                              <input type="hidden" value="<%= i.itemId._id %>" name="itemId" />
-                              <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                        </div>
-                      </div>
-                    </div>
-                      <% }) %>
-              </div>
-        <% } else { %>
-            <h1 class="p-3">No Products Found in the <%= city %> warehouse!</h1>
-        <% } %>
+  <main>
+    <div class="container">
+      <% if (items.length > 0) { %>
+      <h1 class="p-3">Inventory of <%= warehouse.city %> warehouse</h1>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% items.forEach(i => { %>
+        <div class="col">
+          <div class="card">
+            <% if (i.itemId.imageUrl) { %>
+            <img src="<%= i.itemId.imageUrl %>" class="card-img-top" alt="<%= i.itemId.name %>">
+            <% } %>
+            <div class="card-body">
+              <h5 class="card-title overflow-title"><%= i.itemId.name %></h5>
+              <% if (i.itemId.description) { %>
+              <p class="card-text overflow-text"><%= i.itemId.description %></p>
+              <% } %>
             </div>
-    </main>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><label class="fw-bold">Category:</label> <%= i.itemId.category %></li>
+              <li class="list-group-item"><label class="fw-bold">Quantity:</label> <%= i.quantity %></li>
+            </ul>
+            <div class="card-body">
+              <a href="/edit-item/<%= i.itemId._id %>" class="btn btn-primary" class="btn">Edit</a>
 
-<%- include('./includes/end.ejs') %>
+              <form action="/warehouse/delete-item" method="POST">
+                <input type="hidden" value="<%= i.itemId._id %>" name="itemId" />
+                <input type="hidden" value="<%= warehouse._id %>" name="warehouseId" />
+                <button class="btn btn-danger" type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <% } else { %>
+      <h1 class="p-3">No Products Found in the <%= warehouse.city %> warehouse!</h1>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('./includes/end.ejs') %>

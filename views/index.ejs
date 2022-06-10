@@ -2,45 +2,45 @@
 </head>
 
 <body>
-    <%- include('./includes/navigation.ejs') %>
+  <%- include('./includes/navigation.ejs') %>
 
-    <main>
-        <div class="container">
-        <% if (items.length > 0) { %>
-            <div class="row row-cols-1 row-cols-md-3 g-4">
-              <% for (let item of items) { %>
-                <div class="col">
-                    <div class="card">
-                        <% if (item.imageUrl) { %>
-                            <img src="<%= item.imageUrl %>" class="card-img-top" alt="<%= item.name %>">
-                        <% } %>
-                        <div class="card-body">
-                          <h5 class="card-title overflow-title"><%= item.name %></h5>
-                          <% if (item.description) { %>
-                            <p class="card-text overflow-text"><%= item.description %></p>
-                          <% } %>
-                        </div>
-                        <ul class="list-group list-group-flush">
-                          <li class="list-group-item"><label class="fw-bold">Category:</label> <%= item.category %></li>
-                        </ul>
-                        <div class="card-body">
-                            <a href="/inventory/add/<%= item._id %>" class="btn btn-secondary" class="btn">Add Inventory</a>
-
-                            <a href="/edit-item/<%= item._id %>" class="btn btn-primary" class="btn">Edit</a>
-                          
-                            <form action="/delete-item" method="POST">
-                              <input type="hidden" value="<%= item._id %>" name="itemId" />
-                              <button class="btn btn-danger" type="submit">Delete</button>
-                            </form>
-                        </div>
-                      </div>
-                    </div>
-                      <% } %>
-              </div>
-        <% } else { %>
-            <h1>No Products Found!</h1>
-        <% } %>
+  <main>
+    <div class="container">
+      <% if (items.length > 0) { %>
+      <div class="row row-cols-1 row-cols-md-3 g-4">
+        <% for (let item of items) { %>
+        <div class="col">
+          <div class="card">
+            <% if (item.imageUrl) { %>
+            <img src="<%= item.imageUrl %>" class="card-img-top" alt="<%= item.name %>">
+            <% } %>
+            <div class="card-body">
+              <h5 class="card-title overflow-title"><%= item.name %></h5>
+              <% if (item.description) { %>
+              <p class="card-text overflow-text"><%= item.description %></p>
+              <% } %>
             </div>
-    </main>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><label class="fw-bold">Category:</label> <%= item.category %></li>
+            </ul>
+            <div class="card-body">
+              <a href="/inventory/add/<%= item._id %>" class="btn btn-secondary" class="btn">Add Inventory</a>
 
-<%- include('./includes/end.ejs') %>
+              <a href="/item/edit/<%= item._id %>" class="btn btn-primary" class="btn">Edit</a>
+
+              <form action="/item/delete" method="POST">
+                <input type="hidden" value="<%= item._id %>" name="itemId" />
+                <button class="btn btn-danger" type="submit">Delete</button>
+              </form>
+            </div>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <% } else { %>
+      <h1>No Products Found!</h1>
+      <% } %>
+    </div>
+  </main>
+
+  <%- include('./includes/end.ejs') %>
