@@ -3,7 +3,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser')
 
-const inventoryRoutes = require('./routes/inventory');
+const itemRoutes = require('./routes/item');
+const warehouseRoutes = require('./routes/warehouse');
 
 require('dotenv').config(); // Import dependancy that reads environment variables
 
@@ -22,7 +23,8 @@ app.use(bodyParser.urlencoded({ extended: false })); // Parse body requests
 app.use(express.static(path.join(__dirname, 'public'))); // Serving static files from the public folder 
 
 // Set the routes
-app.use(inventoryRoutes);
+app.use(itemRoutes);
+app.use(warehouseRoutes);
 
 // Connect to the mongo database
 mongoose
