@@ -1,5 +1,4 @@
 const Warehouse = require('../models/warehouse');
-const Item = require('../models/item');
 
 exports.getWarehouse = async (req, res) => {
   try {
@@ -18,7 +17,7 @@ exports.getWarehouse = async (req, res) => {
 exports.getAddWarehouse = (req, res) => {
   res.render('edit-warehouse', {
     pageTitle: 'Add Warehouse',
-    path: '/add-warehouse',
+    path: '/warehouse/add',
     editing: false,
   });
 };
@@ -97,17 +96,30 @@ exports.getWarehouseInventory = async (req, res) => {
   const warehouseId = req.params.warehouseId;
 
   try {
-    const warehouse = await Warehouse.findById(warehouseId).populate('inventory.itemId')
-    const items = warehouse.inventory
+    const warehouse = await Warehouse.findById(warehouseId).populate(
+      'inventory.itemId'
+    );
+    const items = warehouse.inventory;
 
     res.render('inventory', {
       pageTitle: 'Warehouses',
       path: '/inventory',
       items: items,
-      city: warehouse.city,
+      warehouse: warehouse,
     });
-
   } catch (error) {
     console.log(error);
   }
-}
+};
+
+exports.postDeleteWarehouseItem = async (req, res) => {
+  const itemId = req.body.itemId;
+  const warehouseId = req.body.warehouseId;
+
+  try {
+    await Warehouse.findById(warehouseId).inventory.findByIdAndRemove(itemId);
+    res.redirect(`/warehouse/${warehouseId}`);
+  } catch (error) {
+    console.log(error);
+  }
+};

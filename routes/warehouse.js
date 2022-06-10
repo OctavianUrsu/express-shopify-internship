@@ -9,20 +9,23 @@ const router = express.Router();
 router.get('/warehouse', warehouseController.getWarehouse);
 
 // GET form and POST new warehouses
-router.get('/add-warehouse', warehouseController.getAddWarehouse);
-router.post('/add-warehouse', warehouseController.postAddWarehouse);
+router.get('/warehouse/add', warehouseController.getAddWarehouse);
+router.post('/warehouse/add', warehouseController.postAddWarehouse);
 
 // GET form and POST edit warehouses
 router.get(
-  '/edit-warehouse/:warehouseId',
+  '/warehouse/edit/:warehouseId',
   warehouseController.getEditWarehouse
 );
-router.post('/edit-warehouse', warehouseController.postEditWarehouse);
+router.post('/warehouse/edit', warehouseController.postEditWarehouse);
 
 // POST delete a warehouse
-router.post('/delete-warehouse', warehouseController.postDeleteWarehouse);
+router.post('/warehouse/delete', warehouseController.postDeleteWarehouse);
 
 // GET inventory in a warehouse
 router.get('/warehouse/:warehouseId', warehouseController.getWarehouseInventory)
+
+// POST delete an item from warehouse
+router.post('/warehouse/delete-item', warehouseController.postDeleteWarehouseItem);
 
 module.exports = router;

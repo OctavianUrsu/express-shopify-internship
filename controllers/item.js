@@ -18,7 +18,7 @@ exports.getIndex = async (req, res) => {
 exports.getAddItem = (req, res) => {
   res.render('edit-item', {
     pageTitle: 'Add Item',
-    path: '/add-item',
+    path: '/item/add',
     editing: false,
   });
 };
@@ -61,7 +61,7 @@ exports.getEditItem = async (req, res) => {
 
     res.render('edit-item', {
       pageTitle: 'Edit Item',
-      path: '/edit-item',
+      path: '/item/edit',
       item: item,
       editing: true,
     });
@@ -99,7 +99,7 @@ exports.postDeleteItem = async (req, res) => {
   const itemId = req.body.itemId;
 
   try {
-    await Item.findByIdAndRemove(itemId);
+    await Item.deleteOne({ _id: itemId });
     res.redirect('/');
   } catch (error) {
     console.log(error);
