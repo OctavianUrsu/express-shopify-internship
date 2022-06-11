@@ -3,6 +3,7 @@ const clearItems = require('../services/clearItems');
 
 const Schema = mongoose.Schema;
 
+// Create a mongoose schema for the 'Item' object
 const itemSchema = new Schema({
   name: { type: String, required: true },
   imageUrl: { type: String, required: false },
@@ -14,12 +15,12 @@ const itemSchema = new Schema({
   },
 });
 
-// Middleware to delete items from all warehouses
+// Middleware: delete items from all warehouses, if item is deleted from products
 itemSchema.pre('deleteOne', async function (next) {
-  const id = this.getQuery()['_id'];
+  const id = this.getQuery()['_id']; // get id of item
 
   try {
-    await clearItems(id);
+    await clearItems(id); // if found, delete items from warehouses
     next();
   } catch (error) {
     console.log(error);
