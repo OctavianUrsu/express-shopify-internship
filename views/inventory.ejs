@@ -26,7 +26,7 @@
               <li class="list-group-item"><label class="fw-bold">Quantity:</label> <%= i.quantity %></li>
             </ul>
             <div class="card-body">
-              <a href="/edit-item/<%= i.itemId._id %>" class="btn btn-primary" class="btn">Edit</a>
+              <a href="/warehouse/<%= warehouse._id %>/item/<%= i.itemId._id %>" class="btn btn-primary" class="btn">Edit</a>
 
               <form action="/warehouse/delete-item" method="POST">
                 <input type="hidden" value="<%= i.itemId._id %>" name="itemId" />

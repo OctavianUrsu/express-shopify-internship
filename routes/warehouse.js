@@ -25,6 +25,12 @@ router.post('/warehouse/delete', warehouseController.postDeleteWarehouse);
 // GET inventory in a warehouse
 router.get('/warehouse/:warehouseId', warehouseController.getWarehouseInventory)
 
+// GET inventory item from warehouse
+router.get('/warehouse/:warehouseId/item/:itemId', warehouseController.getEditWarehouseItem)
+
+// POST edit an item from warehouse
+router.post('/warehouse/item/edit', warehouseController.postEditWarehouseItem);
+
 // POST delete an item from warehouse
 router.post('/warehouse/delete-item', warehouseController.postDeleteWarehouseItem);
 

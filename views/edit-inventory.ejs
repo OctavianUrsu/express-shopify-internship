@@ -1,0 +1,55 @@
+<%- include('./includes/head.ejs') %>
+</head>
+
+<body>
+  <%- include('./includes/navigation.ejs') %>
+
+  <main>
+    <div class="container">
+      <div class="row">
+        <div class="col-4">
+          <div class="card">
+            <% if (item.imageUrl) { %>
+            <img src="<%= item.imageUrl %>" class="card-img-top" alt="<%= item.name %>">
+            <% } %>
+            <div class="card-body">
+              <h5 class="card-title"><%= item.name %></h5>
+              <% if (item.description) { %>
+              <p class="card-text"><%= item.description %></p>
+              <% } %>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item"><label class="fw-bold">Category:</label> <%= item.category %></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-8">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Add item to inventory</h5>
+              <form action="/warehouse/item/edit" method="POST">
+                <div class="mb-3">
+                  <label for="exampleFormControlInput1" class="form-label">Warehouse</label>
+                  <select class="form-select" aria-label="Choose a warehouse" id="warehouseId" name="warehouseId" disabled>
+                    <option value="<%= warehouse._id %>"><%= warehouse.city %>, <%= warehouse.country %></option>
+                  </select>
+                </div>
+                <div class="mb-3">
+                  <label for="exampleFormControlTextarea1" class="form-label">Quantity</label>
+                  <input type="number" class="form-control" id="quantity" name="quantity" value="<%= quantity %>">
+                </div>
+
+                <input type="hidden" name="itemId" value="<%= item._id %>">
+                <input type="hidden" name="warehouseId" value="<%= warehouse._id %>">
+                <button type="submit" class="btn btn-primary col-sm-12">Submit</button>
+
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <%- include('./includes/end.ejs') %>

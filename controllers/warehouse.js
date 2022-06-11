@@ -1,4 +1,5 @@
 const Warehouse = require('../models/warehouse');
+const Item = require('../models/item');
 
 exports.getWarehouse = async (req, res) => {
   try {
@@ -117,9 +118,60 @@ exports.postDeleteWarehouseItem = async (req, res) => {
   const warehouseId = req.body.warehouseId;
 
   try {
-    await Warehouse.findById(warehouseId).inventory.findByIdAndRemove(itemId);
+    const warehouse = await Warehouse.findById(warehouseId);
+    const updatedInventory = warehouse.inventory.filter(
+      (data) => data.itemId.toString() !== itemId.toString()
+    );
+
+    warehouse.inventory = updatedInventory;
+
+    await warehouse.save();
+
     res.redirect(`/warehouse/${warehouseId}`);
   } catch (error) {
     console.log(error);
   }
 };
+
+exports.getEditWarehouseItem = async (req, res) => {
+  const warehouseId = req.params.warehouseId;
+  const itemId = req.params.itemId;
+
+  try {
+    const warehouse = await Warehouse.findById(warehouseId);
+    const item = await Item.findById(itemId);
+    const inventory = warehouse.inventory.filter(
+      (data) => data.itemId.toString() === itemId.toString()
+    ); 
+    const quantity = inventory[0].quantity
+
+    res.render('edit-inventory', {
+      pageTitle: 'Edit inventory',
+      path: '/warehouse',
+      warehouse: warehouse,
+      item: item,
+      quantity: quantity
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+exports.postEditWarehouseItem = async (req, res) => {
+  const warehouseId = req.body.warehouseId;
+  const itemId = req.body.itemId;
+  const updatedQuantity = req.body.quantity;
+
+  try {
+    const warehouse = await Warehouse.findById(warehouseId);
+    const inventory = warehouse.inventory.filter(
+      (data) => data.itemId.toString() === itemId.toString()
+    ); 
+    inventory[0].quantity = updatedQuantity
+
+    await warehouse.save();
+    res.redirect(`/warehouse/${warehouseId}`)
+  } catch (error) {
+    console.log(error);
+  }
+}
