@@ -31,7 +31,8 @@
               <form action="/inventory/add" method="POST">
                 <div class="mb-3">
                   <label for="exampleFormControlInput1" class="form-label">Warehouse</label>
-                  <select class="form-select" aria-label="Choose a warehouse" id="warehouseId" name="warehouseId">
+                  <select class="form-select" aria-label="Choose a warehouse" id="warehouseId" name="warehouseId" required>
+                    <option selected disabled value="">Choose...</option>
                     <% for (let warehouse of warehouses) { %>
                     <option value="<%= warehouse._id %>"><%= warehouse.city %>, <%= warehouse.country %></option>
                     <% } %>
@@ -39,7 +40,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="exampleFormControlTextarea1" class="form-label">Quantity</label>
-                  <input type="number" class="form-control" id="quantity" name="quantity">
+                  <input type="number" class="form-control" id="quantity" name="quantity" required>
                 </div>
 
                 <input type="hidden" name="itemId" value="<%= item._id %>">

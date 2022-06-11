@@ -11,6 +11,8 @@ exports.getIndex = async (req, res) => {
       path: '/',
     });
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -28,23 +30,29 @@ exports.postAddItem = async (req, res) => {
   const imageUrl = req.body.imageUrl;
   const description = req.body.description;
   const category = req.body.category;
-  const costPerItem = req.body.costPerItem;
-  const quantity = req.body.quantity;
-
-  const item = new Item({
-    name: name,
-    imageUrl: imageUrl,
-    description: description,
-    category: category,
-    costPerItem: costPerItem,
-    quantity: quantity,
-  });
 
   try {
-    await item.save();
+    if (name && imageUrl && description && category) {
+      const item = new Item({
+        name: name,
+        imageUrl: imageUrl,
+        description: description,
+        category: category,
+      });
 
-    res.redirect('/');
+      await item.save();
+      res.redirect('/');
+    } else {
+      res.status(400);
+      res.render('404', {
+        pageTitle: 'Error',
+        path: '/error',
+        error: 'error: fill all fields',
+      });
+    }
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -55,10 +63,6 @@ exports.getEditItem = async (req, res) => {
   try {
     const item = await Item.findById(itemId);
 
-    if (!item) {
-      return res.redirect('/');
-    }
-
     res.render('edit-item', {
       pageTitle: 'Edit Item',
       path: '/item/edit',
@@ -66,6 +70,8 @@ exports.getEditItem = async (req, res) => {
       editing: true,
     });
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -76,8 +82,6 @@ exports.postEditItem = async (req, res) => {
   const updatedImageUrl = req.body.imageUrl;
   const updatedDescription = req.body.description;
   const updatedCategory = req.body.category;
-  const updatedCostPerItem = req.body.costPerItem;
-  const updatedQuantity = req.body.quantity;
 
   try {
     const item = await Item.findById(itemId);
@@ -85,12 +89,26 @@ exports.postEditItem = async (req, res) => {
     item.imageUrl = updatedImageUrl;
     item.description = updatedDescription;
     item.category = updatedCategory;
-    item.costPerItem = updatedCostPerItem;
-    item.quantity = updatedQuantity;
 
-    await item.save();
-    res.redirect('/');
+    if (
+      updatedName &&
+      updatedImageUrl &&
+      updatedDescription &&
+      updatedCategory
+    ) {
+      await item.save();
+      res.redirect('/');
+    } else {
+      res.status(400);
+      res.render('404', {
+        pageTitle: 'Error',
+        path: '/error',
+        error: 'error: fill all fields',
+      });
+    }
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -102,6 +120,8 @@ exports.postDeleteItem = async (req, res) => {
     await Item.deleteOne({ _id: itemId });
     res.redirect('/');
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -110,14 +130,9 @@ exports.getAddToWarehouse = async (req, res) => {
   const itemId = req.params.itemId;
 
   try {
-    // get item
     const item = await Item.findById(itemId);
-    if (!item) {
-      return res.redirect('/');
-    }
-
-    // get warehouses
     const warehouses = await Warehouse.find();
+
     res.render('add-to-warehouse', {
       pageTitle: 'Add Item to Warehouse',
       path: '/inventory/add',
@@ -125,6 +140,8 @@ exports.getAddToWarehouse = async (req, res) => {
       warehouses: warehouses,
     });
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -140,6 +157,8 @@ exports.postAddToWarehouse = async (req, res) => {
     await warehouse.addToInventory(item, quantity);
     res.redirect(`/warehouse/${warehouseId}`);
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };

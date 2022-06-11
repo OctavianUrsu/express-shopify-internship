@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 
 const itemRoutes = require('./routes/item');
 const warehouseRoutes = require('./routes/warehouse');
+const errorController = require('./controllers/error');
 
 require('dotenv').config(); // Import dependancy that reads environment variables
 
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public'))); // Serving static files
 // Set the routes
 app.use(itemRoutes);
 app.use(warehouseRoutes);
+app.use(errorController.get404);
 
 // Connect to the mongo database
 mongoose

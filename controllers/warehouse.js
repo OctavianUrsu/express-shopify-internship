@@ -11,6 +11,8 @@ exports.getWarehouse = async (req, res) => {
       warehouse: warehouses,
     });
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -28,17 +30,28 @@ exports.postAddWarehouse = async (req, res) => {
   const postCode = req.body.postCode;
   const country = req.body.country;
 
-  const warehouse = new Warehouse({
-    city: city,
-    postCode: postCode,
-    country: country,
-    items: [],
-  });
-
   try {
-    await warehouse.save();
-    res.redirect('/warehouse');
+    if (city && postCode && country) {
+      const warehouse = new Warehouse({
+        city: city,
+        postCode: postCode,
+        country: country,
+        items: [],
+      });
+
+      await warehouse.save();
+      res.redirect('/warehouse');
+    } else {
+      res.status(400);
+      res.render('404', {
+        pageTitle: 'Error',
+        path: '/error',
+        error: 'error: fill all fields',
+      });
+    }
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -48,9 +61,6 @@ exports.getEditWarehouse = async (req, res) => {
 
   try {
     const warehouse = await Warehouse.findById(warehouseId);
-    if (!warehouse) {
-      res.redirect('/warehouse');
-    }
 
     res.render('edit-warehouse', {
       pageTitle: 'Edit Warehouse',
@@ -59,6 +69,8 @@ exports.getEditWarehouse = async (req, res) => {
       editing: true,
     });
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -70,14 +82,25 @@ exports.postEditWarehouse = async (req, res) => {
   const updatedCountry = req.body.country;
 
   try {
-    const warehouse = await Warehouse.findById(warehouseId);
-    warehouse.city = updatedCity;
-    warehouse.postCode = updatedPostCode;
-    warehouse.country = updatedCountry;
+    if (updatedCity && updatedPostCode && updatedCountry) {
+      const warehouse = await Warehouse.findById(warehouseId);
+      warehouse.city = updatedCity;
+      warehouse.postCode = updatedPostCode;
+      warehouse.country = updatedCountry;
 
-    await warehouse.save();
-    res.redirect('/warehouse');
+      await warehouse.save();
+      res.redirect('/warehouse');
+    } else {
+      res.status(400);
+      res.render('404', {
+        pageTitle: 'Error',
+        path: '/error',
+        error: 'error: fill all fields',
+      });
+    }
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -89,6 +112,8 @@ exports.postDeleteWarehouse = async (req, res) => {
     await Warehouse.findByIdAndRemove(warehouseId);
     res.redirect('/warehouse');
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -109,6 +134,8 @@ exports.getWarehouseInventory = async (req, res) => {
       warehouse: warehouse,
     });
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -129,6 +156,8 @@ exports.postDeleteWarehouseItem = async (req, res) => {
 
     res.redirect(`/warehouse/${warehouseId}`);
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -142,17 +171,19 @@ exports.getEditWarehouseItem = async (req, res) => {
     const item = await Item.findById(itemId);
     const inventory = warehouse.inventory.filter(
       (data) => data.itemId.toString() === itemId.toString()
-    ); 
-    const quantity = inventory[0].quantity
+    );
+    const quantity = inventory[0].quantity;
 
     res.render('edit-inventory', {
       pageTitle: 'Edit inventory',
       path: '/warehouse',
       warehouse: warehouse,
       item: item,
-      quantity: quantity
+      quantity: quantity,
     });
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
 };
@@ -163,15 +194,26 @@ exports.postEditWarehouseItem = async (req, res) => {
   const updatedQuantity = req.body.quantity;
 
   try {
-    const warehouse = await Warehouse.findById(warehouseId);
-    const inventory = warehouse.inventory.filter(
-      (data) => data.itemId.toString() === itemId.toString()
-    ); 
-    inventory[0].quantity = updatedQuantity
+    if (updatedQuantity) {
+      const warehouse = await Warehouse.findById(warehouseId);
+      const inventory = warehouse.inventory.filter(
+        (data) => data.itemId.toString() === itemId.toString()
+      );
+      inventory[0].quantity = updatedQuantity;
 
-    await warehouse.save();
-    res.redirect(`/warehouse/${warehouseId}`)
+      await warehouse.save();
+      res.redirect(`/warehouse/${warehouseId}`);
+    } else {
+      res.status(400);
+      res.render('404', {
+        pageTitle: 'Error',
+        path: '/error',
+        error: 'error: fill all fields',
+      });
+    }
   } catch (error) {
+    res.status(400);
+    res.render('404', { pageTitle: 'Error', path: '/error', error: error });
     console.log(error);
   }
-}
+};
