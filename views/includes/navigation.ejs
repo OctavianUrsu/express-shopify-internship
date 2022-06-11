@@ -1,28 +1,28 @@
 <nav class="navbar navbar-dark navbar-expand-lg bg-primary">
-    <div class="container">
-      <a class="navbar-brand mb-0 h1">Inventory Tracker</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link mb-0 <%= path === '/' ? 'active' : '' %>" aria-current="page" href="/">Products</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link mb-0 <%= path === '/warehouse' ? 'active' : '' %>" href="/warehouse">Warehouses</a>
-          </li>          
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle <%= path === '/add-item' ? 'active' : '' %> <%= path === '/add-warehouse' ? 'active' : '' %>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-              Add
-            </a>
-            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <a class="dropdown-item <%= path === '/item/add' ? 'active' : '' %>" href="/item/add">Product</a>
-              <a class="dropdown-item <%= path === '/warehouse/add' ? 'active' : '' %>" href="/warehouse/add">Warehouse</a>
-            </div>
-          </li>
+  <div class="container">
+    <a class="navbar-brand mb-0 h1">Inventory Tracker</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link mb-0 <%= path === '/' ? 'active' : '' %>" aria-current="page" href="/">Products</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link mb-0 <%= path === '/warehouse' ? 'active' : '' %>" href="/warehouse">Warehouses</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle <%= path === '/add-item' ? 'active' : '' %> <%= path === '/add-warehouse' ? 'active' : '' %>" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Add
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <a class="dropdown-item <%= path === '/item/add' ? 'active' : '' %>" href="/item/add">Product</a>
+            <a class="dropdown-item <%= path === '/warehouse/add' ? 'active' : '' %>" href="/warehouse/add">Warehouse</a>
+          </div>
+        </li>
 
-        </ul>
-      </div>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
